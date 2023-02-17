@@ -23,6 +23,8 @@ class MakePri {
       '$buildPath\\priconfig.xml',
       '/dq',
       'en-US',
+      '/pv',
+      '10.0.0',
       '/o'
     ])
       ..exitOnError();
