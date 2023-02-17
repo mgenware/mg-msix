@@ -54,11 +54,11 @@ class MakePri {
     for (var raw in names) {
       // `raw` is like `en-US=MyApp`.
       var parts = raw.split('=');
-      var lang = parts[0];
-      var appName = parts[1];
+      var lang = parts[0].trim();
+      var appName = parts[1].trim();
 
       var langDir = p.join(rootDir, 'Strings', lang);
-      var reswFile = p.join(langDir, '$lang.resw');
+      var reswFile = p.join(langDir, 'Resources.resw');
 
       await Directory(langDir).create(recursive: true);
       await File(reswFile).writeAsString(_reswAppName(appName));
