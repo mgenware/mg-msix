@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:cli_util/cli_logging.dart';
 import 'package:get_it/get_it.dart';
-import 'package:msix/src/appx_manifest.dart';
-import 'package:msix/src/configuration.dart';
+import 'package:mg_msix/src/appx_manifest.dart';
+import 'package:mg_msix/src/configuration.dart';
 import 'package:test/test.dart';
 
 const tempFolderPath = 'test/appx_manifest_temp';
@@ -22,6 +22,10 @@ void main() {
       ..appName = 'appName_test'
       ..appDescription = 'appDescription_test'
       ..displayName = 'displayName_test'
+      ..displayNames = [
+        'en-US=displayName_test_en',
+        'zh-CN=displayName_test_zh'
+      ]
       ..architecture = 'x64'
       ..executableFileName = 'executableFileName_test'
       ..protocolActivation = ['protocolActivation_test']
@@ -114,7 +118,7 @@ void main() {
   });
 
   test('displayName is valid', () async {
-    var testValue = 'displayName_test123';
+    var testValue = 'ms-resource:AppName';
     config.displayName = testValue;
     await AppxManifest().generateAppxManifest();
     var manifestContent =

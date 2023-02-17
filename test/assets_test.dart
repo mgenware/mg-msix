@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cli_util/cli_logging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image/image.dart';
-import 'package:msix/src/assets.dart';
-import 'package:msix/src/configuration.dart';
+import 'package:mg_msix/src/assets.dart';
+import 'package:mg_msix/src/configuration.dart';
 import 'package:test/test.dart';
 
 const tempFolderPath = 'test/assets_temp';

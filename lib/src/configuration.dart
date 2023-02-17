@@ -26,6 +26,7 @@ class Configuration {
   String? certificatePassword;
   String? publisher;
   String? displayName;
+  List<String>? displayNames;
   String? architecture;
   String? capabilities;
   String? logoPath;
@@ -105,7 +106,14 @@ class Configuration {
     if (createWithDebugBuildFiles) {
       buildFilesFolder = buildFilesFolder.replaceFirst('Release', 'Debug');
     }
-    displayName = _args['display-name'] ?? yaml['display_name'];
+
+    final String? displayNamesConfig =
+        (_args['display-names'] ?? yaml['display_names'])?.toString();
+    if (displayNamesConfig != null && displayNamesConfig.isNotEmpty) {
+      CommandLineConverter commandLineConverter = CommandLineConverter();
+      displayNames = commandLineConverter.convert(displayNamesConfig);
+    }
+
     publisherName =
         _args['publisher-display-name'] ?? yaml['publisher_display_name'];
     publisher = _args['publisher'] ?? yaml['publisher'];
@@ -284,6 +292,7 @@ class Configuration {
       ..addOption('certificate-path', abbr: 'c')
       ..addOption('version')
       ..addOption('display-name', abbr: 'd')
+      ..addOption('display-names')
       ..addOption('publisher-display-name', abbr: 'u')
       ..addOption('identity-name', abbr: 'i')
       ..addOption('publisher', abbr: 'b')
@@ -342,8 +351,8 @@ class Configuration {
       throw 'Failed to locate or read package config.';
     }
 
-    Package msixPackage =
-        packagesConfig.packages.firstWhere((package) => package.name == "msix");
+    Package msixPackage = packagesConfig.packages
+        .firstWhere((package) => package.name == "mg_msix");
     String path =
         '${msixPackage.packageUriRoot.toString().replaceAll('file:///', '')}assets';
 
