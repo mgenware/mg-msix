@@ -230,11 +230,11 @@ class AppxManifest {
     return capabilitiesString;
   }
 
-  String? _getTileShortName(String? text) {
-    if (text != null && text.length > 40) {
-      return '${text.substring(0, 37)}...';
-    }
+  // String? _getTileShortName(String? text) {
+  //   if (text != null && text.length > 40) {
+  //     return '${text.substring(0, 37)}...';
+  //   }
 
-    return text;
-  }
+  //   return text;
+  // }
 }

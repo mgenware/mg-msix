@@ -62,7 +62,7 @@ class MakePri {
     // https://stackoverflow.com/questions/38506783/why-is-makepri-exe-creating-more-than-one-resources-pri-file
     return """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <resources targetOsVersion="10.0.0" majorVersion="1">
-  <index root="\" startIndexAt="\">
+  <index root="\\" startIndexAt="\\">
     <default>
       <qualifier name="Language" value="en-US"/>
       <qualifier name="Contrast" value="standard"/>
