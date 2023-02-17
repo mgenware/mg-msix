@@ -51,7 +51,7 @@ class MakePri {
       var reswFile = p.join(langDir, 'Resources.resw');
 
       // ignore: avoid_print
-      print('Generating localized app name $lang -> $appName');
+      print('\n ✅ Generating localized app name $lang -> $appName\n');
 
       await Directory(langDir).create(recursive: true);
       await File(reswFile).writeAsString(_reswWithAppName(appName));
