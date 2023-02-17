@@ -110,8 +110,7 @@ class Configuration {
     final String? displayNamesConfig =
         (_args['display-names'] ?? yaml['display_names'])?.toString();
     if (displayNamesConfig != null && displayNamesConfig.isNotEmpty) {
-      CommandLineConverter commandLineConverter = CommandLineConverter();
-      displayNames = commandLineConverter.convert(displayNamesConfig);
+      displayNames = displayNamesConfig.split(',');
     }
 
     publisherName =

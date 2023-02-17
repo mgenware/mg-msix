@@ -5,6 +5,8 @@ import 'capabilities.dart';
 import 'configuration.dart';
 import 'method_extensions.dart';
 
+const localizedAppNameKey = 'ms-resource:AppName';
+
 /// Handles the creation of the manifest file
 class AppxManifest {
   final Logger _logger = GetIt.I<Logger>();
@@ -38,7 +40,7 @@ class AppxManifest {
     <Identity Name="${_config.identityName}" Version="${_config.msixVersion}"
               Publisher="${_config.publisher!.replaceAll(' = ', '=').toHtmlEscape()}" ProcessorArchitecture="${_config.architecture}" />
     <Properties>
-      <DisplayName>ms-resource:AppName</DisplayName>
+      <DisplayName>$localizedAppNameKey</DisplayName>
       <PublisherDisplayName>${_config.publisherName.toHtmlEscape()}</PublisherDisplayName>
       <Logo>Images\\StoreLogo.png</Logo>
       <Description>${_config.appDescription.toHtmlEscape()}</Description>
@@ -55,9 +57,9 @@ class AppxManifest {
     <Applications>
       <Application Id="${_config.appName!.replaceAll('_', '')}" Executable="${_config.executableFileName.toHtmlEscape()}" EntryPoint="Windows.FullTrustApplication">
         <uap:VisualElements BackgroundColor="transparent"
-          DisplayName="ms-resource:AppName" Square150x150Logo="Images\\Square150x150Logo.png"
+          DisplayName="$localizedAppNameKey" Square150x150Logo="Images\\Square150x150Logo.png"
           Square44x44Logo="Images\\Square44x44Logo.png" Description="${_config.appDescription.toHtmlEscape()}">
-          <uap:DefaultTile ShortName="ms-resource:AppName" Square310x310Logo="Images\\LargeTile.png"
+          <uap:DefaultTile ShortName="$localizedAppNameKey" Square310x310Logo="Images\\LargeTile.png"
           Square71x71Logo="Images\\SmallTile.png" Wide310x150Logo="Images\\Wide310x150Logo.png">
             <uap:ShowNameOnTiles>
               <uap:ShowOn Tile="square150x150Logo"/>
@@ -153,7 +155,7 @@ class AppxManifest {
 
   String _getStartupTaskExtension() {
     return '''<desktop:Extension Category="windows.startupTask" Executable="${_config.executableFileName.toHtmlEscape()}" EntryPoint="Windows.FullTrustApplication">
-      <desktop:StartupTask TaskId="${_config.appName!.replaceAll('_', '')}" Enabled="true" DisplayName="ms-resource:AppName"/>
+      <desktop:StartupTask TaskId="${_config.appName!.replaceAll('_', '')}" Enabled="true" DisplayName="${_config.displayName.toHtmlEscape()}"/>
       </desktop:Extension>''';
   }
 
