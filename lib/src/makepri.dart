@@ -10,8 +10,8 @@ class MakePri {
   final Logger _logger = GetIt.I<Logger>();
   final Configuration _config = GetIt.I<Configuration>();
 
-  Future<void> generatePRI(Map<String, String> displayNames,
-      Map<String, String> descriptions) async {
+  Future<void> generatePRI(Map<dynamic, dynamic> displayNames,
+      Map<dynamic, dynamic> descriptions) async {
     _logger.trace('generate package resource indexing files');
 
     final String buildPath = _config.buildFilesFolder;
@@ -41,11 +41,11 @@ class MakePri {
     makePriProcess.exitOnError();
   }
 
-  Future<void> _generateReswStrings(String rootDir, Map<String, String> names,
-      Map<String, String> descriptions) async {
+  Future<void> _generateReswStrings(String rootDir, Map<dynamic, dynamic> names,
+      Map<dynamic, dynamic> descriptions) async {
     for (var lang in names.keys) {
-      var appName = names[lang]!;
-      var appDesc = descriptions[lang]!;
+      var appName = names[lang]!.toString();
+      var appDesc = descriptions[lang]!.toString();
 
       var langDir = p.join(rootDir, 'Strings', lang);
       var reswFile = p.join(langDir, 'Resources.resw');

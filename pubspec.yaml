@@ -1,6 +1,6 @@
 name: mg_msix
 description: A command-line tool that create Msix installer from your flutter windows-build files.
-version: 3.8.5
+version: 3.8.6
 maintainer: Yehuda Kremer (yehudakremer@gmail.com)
 homepage: https://github.com/YehudaKremer/msix
 

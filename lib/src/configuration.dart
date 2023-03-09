@@ -26,8 +26,8 @@ class Configuration {
   String? certificatePassword;
   String? publisher;
   String? displayName;
-  Map<String, String>? displayNames;
-  Map<String, String>? descriptions;
+  Map<dynamic, dynamic>? displayNames;
+  Map<dynamic, dynamic>? descriptions;
   String? architecture;
   String? capabilities;
   String? logoPath;
@@ -108,8 +108,8 @@ class Configuration {
       buildFilesFolder = buildFilesFolder.replaceFirst('Release', 'Debug');
     }
 
-    displayNames = yaml['app_names'];
-    descriptions = yaml['app_descriptions'];
+    displayNames = (yaml['app_names'] as YamlMap?)?.value;
+    descriptions = (yaml['app_descriptions'] as YamlMap?)?.value;
 
     publisherName =
         _args['publisher-display-name'] ?? yaml['publisher_display_name'];
