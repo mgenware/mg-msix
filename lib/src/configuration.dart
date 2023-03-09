@@ -26,7 +26,8 @@ class Configuration {
   String? certificatePassword;
   String? publisher;
   String? displayName;
-  List<String>? displayNames;
+  Map<String, String>? displayNames;
+  Map<String, String>? descriptions;
   String? architecture;
   String? capabilities;
   String? logoPath;
@@ -107,11 +108,8 @@ class Configuration {
       buildFilesFolder = buildFilesFolder.replaceFirst('Release', 'Debug');
     }
 
-    final String? displayNamesConfig =
-        (_args['display-names'] ?? yaml['display_names'])?.toString();
-    if (displayNamesConfig != null && displayNamesConfig.isNotEmpty) {
-      displayNames = displayNamesConfig.split(',');
-    }
+    displayNames = yaml['app_names'];
+    descriptions = yaml['app_descriptions'];
 
     publisherName =
         _args['publisher-display-name'] ?? yaml['publisher_display_name'];

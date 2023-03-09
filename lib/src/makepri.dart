@@ -10,14 +10,15 @@ class MakePri {
   final Logger _logger = GetIt.I<Logger>();
   final Configuration _config = GetIt.I<Configuration>();
 
-  Future<void> generatePRI(List<String> displayNames) async {
+  Future<void> generatePRI(Map<String, String> displayNames,
+      Map<String, String> descriptions) async {
     _logger.trace('generate package resource indexing files');
 
     final String buildPath = _config.buildFilesFolder;
     String makePriPath =
         '${_config.msixToolkitPath}/Redist.${_config.architecture}/makepri.exe';
 
-    await _generateReswStrings(buildPath, displayNames);
+    await _generateReswStrings(buildPath, displayNames, descriptions);
 
     var priConfigFile = '$buildPath\\priconfig.xml';
     await File(priConfigFile).writeAsString(_defaultPRIConfigFile());
@@ -40,12 +41,11 @@ class MakePri {
     makePriProcess.exitOnError();
   }
 
-  Future<void> _generateReswStrings(String rootDir, List<String> names) async {
-    for (var raw in names) {
-      // `raw` is like `en-US=MyApp`.
-      var parts = raw.split('=');
-      var lang = parts[0].trim();
-      var appName = parts[1].trim();
+  Future<void> _generateReswStrings(String rootDir, Map<String, String> names,
+      Map<String, String> descriptions) async {
+    for (var lang in names.keys) {
+      var appName = names[lang]!;
+      var appDesc = descriptions[lang]!;
 
       var langDir = p.join(rootDir, 'Strings', lang);
       var reswFile = p.join(langDir, 'Resources.resw');
@@ -54,7 +54,7 @@ class MakePri {
       print('\n ✅ Generating localized app name $lang -> $appName\n');
 
       await Directory(langDir).create(recursive: true);
-      await File(reswFile).writeAsString(_reswWithAppName(appName));
+      await File(reswFile).writeAsString(_reswWithAppName(appName, appDesc));
     }
   }
 
@@ -89,7 +89,7 @@ class MakePri {
 </resources>""";
   }
 
-  String _reswWithAppName(String localizedName) {
+  String _reswWithAppName(String localizedName, String localizedDesc) {
     return """<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
@@ -210,7 +210,10 @@ class MakePri {
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppName" xml:space="preserve">
-    <value>$localizedName</value>
+    <value>${localizedName.toHtmlEscape()}</value>
+  </data>
+  <data name="AppDesc" xml:space="preserve">
+    <value>${localizedDesc.toHtmlEscape()}</value>
   </data>
 </root>""";
   }

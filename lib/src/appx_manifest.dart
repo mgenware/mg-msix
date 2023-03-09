@@ -6,6 +6,7 @@ import 'configuration.dart';
 import 'method_extensions.dart';
 
 const localizedAppNameKey = 'ms-resource:AppName';
+const localizedAppDescKey = 'ms-resource:AppDesc';
 
 /// Handles the creation of the manifest file
 class AppxManifest {
@@ -43,7 +44,7 @@ class AppxManifest {
       <DisplayName>$localizedAppNameKey</DisplayName>
       <PublisherDisplayName>${_config.publisherName.toHtmlEscape()}</PublisherDisplayName>
       <Logo>Images\\StoreLogo.png</Logo>
-      <Description>${_config.appDescription.toHtmlEscape()}</Description>
+      <Description>$localizedAppDescKey</Description>
     </Properties>
     <Resources>
       ${_config.languages!.map((language) => '<Resource Language="$language" />').join('')}
@@ -58,7 +59,7 @@ class AppxManifest {
       <Application Id="${_config.appName!.replaceAll('_', '')}" Executable="${_config.executableFileName.toHtmlEscape()}" EntryPoint="Windows.FullTrustApplication">
         <uap:VisualElements BackgroundColor="transparent"
           DisplayName="$localizedAppNameKey" Square150x150Logo="Images\\Square150x150Logo.png"
-          Square44x44Logo="Images\\Square44x44Logo.png" Description="${_config.appDescription.toHtmlEscape()}">
+          Square44x44Logo="Images\\Square44x44Logo.png" Description="$localizedAppDescKey">
           <uap:DefaultTile ShortName="$localizedAppNameKey" Square310x310Logo="Images\\LargeTile.png"
           Square71x71Logo="Images\\SmallTile.png" Wide310x150Logo="Images\\Wide310x150Logo.png">
             <uap:ShowNameOnTiles>

@@ -114,10 +114,7 @@ class Msix {
       await SignTool().getCertificatePublisher();
     }
     await AppxManifest().generateAppxManifest();
-    if (_config.displayNames?.isEmpty ?? true) {
-      throw 'display_names cannot be null';
-    }
-    await MakePri().generatePRI(_config.displayNames!);
+    await MakePri().generatePRI(_config.displayNames!, _config.descriptions!);
 
     loggerProgress.finish(showTiming: true);
   }

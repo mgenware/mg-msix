@@ -22,10 +22,10 @@ void main() {
       ..appName = 'appName_test'
       ..appDescription = 'appDescription_test'
       ..displayName = 'displayName_test'
-      ..displayNames = [
-        'en-US=displayName_test_en',
-        'zh-CN=displayName_test_zh'
-      ]
+      ..displayNames = {
+        'en-US': 'displayName_test_en',
+        'zh-CN': 'displayName_test_zh'
+      }
       ..architecture = 'x64'
       ..executableFileName = 'executableFileName_test'
       ..protocolActivation = ['protocolActivation_test']
