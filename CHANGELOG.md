@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.9.1
+
+- remove padding from generated icons (fix [#179](https://github.com/YehudaKremer/msix/issues/179))
+- fix pixelated icons
+
+## 3.8.4
+
+- add `screenshot` and `issue_tracker` to the package metadata
+
 ## 3.8.2
 
 - fix [#180](https://github.com/YehudaKremer/msix/issues/180)
