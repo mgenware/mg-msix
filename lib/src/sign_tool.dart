@@ -19,31 +19,33 @@ class SignTool {
   Future<void> getCertificatePublisher() async {
     _logger.trace('getting certificate publisher');
 
-    String subject = '';
+    if (_config.publisher.isNullOrEmpty) {
+      String subject = '';
 
-    if (_config.signToolOptions != null) {
-      if (_config.signToolOptions!.containsArgument('/sha1')) {
-        subject = await _getCertificateSubjectByThumbprint();
-      } else if (_config.signToolOptions!.containsArguments(['/n', '/r'])) {
-        subject = await _getCertificateSubjectBySubject();
-      } else if (_config.signToolOptions!.containsArgument('/i')) {
-        subject = await _getCertificateSubjectByIssuer();
-      } else if (_config.signToolOptions!.containsArgument('/f')) {
-        subject = await _getCertificateSubjectByFile(true);
+      if (isCustomSignCommand(_config.signToolOptions)) {
+        if (_config.signToolOptions!.containsArgument('/sha1')) {
+          subject = await _getCertificateSubjectByThumbprint();
+        } else if (_config.signToolOptions!.containsArguments(['/n', '/r'])) {
+          subject = await _getCertificateSubjectBySubject();
+        } else if (_config.signToolOptions!.containsArgument('/i')) {
+          subject = await _getCertificateSubjectByIssuer();
+        } else if (_config.signToolOptions!.containsArgument('/f')) {
+          subject = await _getCertificateSubjectByFile(true);
+        }
+      } else if (_config.certificatePath != null &&
+          _config.certificatePath!.isNotEmpty) {
+        subject = await _getCertificateSubjectByFile(false);
       }
-    } else if (_config.certificatePath != null &&
-        _config.certificatePath!.isNotEmpty) {
-      subject = await _getCertificateSubjectByFile(false);
+
+      if (subject.isNotEmpty) {
+        _config.publisher = subject;
+      }
     }
 
-    if (subject.isNotEmpty) {
-      _config.publisher = subject;
-    }
-
-    if (_config.publisher != null && _config.publisher!.isNotEmpty) {
-      _checkCertificateSubject(_config.publisher!);
-    } else {
+    if (_config.publisher.isNullOrEmpty) {
       _failToGetCertificateSubject();
+    } else {
+      _checkCertificateSubject(_config.publisher!);
     }
   }
 
@@ -203,10 +205,9 @@ class SignTool {
 
     String signtoolPath =
         '${_config.msixToolkitPath}/Redist.${_config.architecture}/signtool.exe';
-    List<String> signtoolOptions = ['/v'];
+    List<String> signtoolOptions = _config.signToolOptions ?? ['/v'];
 
-    if (_config.signToolOptions != null &&
-        _config.signToolOptions!.isNotEmpty) {
+    if (isCustomSignCommand(_config.signToolOptions)) {
       signtoolOptions = _config.signToolOptions!;
     } else if (_config.certificatePath != null) {
       switch (extension(_config.certificatePath!).toLowerCase()) {
@@ -245,4 +246,9 @@ class SignTool {
     ])
       ..exitOnError();
   }
+
+  static isCustomSignCommand(List<String>? signToolOptions) =>
+      signToolOptions != null &&
+      signToolOptions.isNotEmpty &&
+      signToolOptions.containsArguments(['/sha1', '/n', '/r', '/i', '/f']);
 }

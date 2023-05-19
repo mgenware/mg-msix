@@ -8,6 +8,7 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:yaml/yaml.dart';
 import 'command_line_converter.dart';
 import 'method_extensions.dart';
+import 'sign_tool.dart';
 
 /// Handles loading and validating the configuration values
 class Configuration {
@@ -55,6 +56,7 @@ class Configuration {
   bool trimLogo = true;
   bool createWithDebugBuildFiles = false;
   bool enableAtStartup = false;
+  StartupTask? startupTask;
   Iterable<String>? appUriHandlerHosts;
   Iterable<String>? languages;
   String get defaultsIconsFolderPath => '$msixAssetsPath/icons';
@@ -116,6 +118,8 @@ class Configuration {
     publisher = _args['publisher'] ?? yaml['publisher'];
     identityName = _args['identity-name'] ?? yaml['identity_name'];
     logoPath = _args['logo-path'] ?? yaml['logo_path'];
+    osMinVersion =
+        _args['os-min-version'] ?? yaml['os_min_version'] ?? osMinVersion;
 
     final String? signToolOptionsConfig =
         (_args['signtool-options'] ?? yaml['signtool_options'])?.toString();
@@ -143,6 +147,11 @@ class Configuration {
     appUriHandlerHosts = _getAppUriHandlerHosts(yaml);
     enableAtStartup = _args.wasParsed('enable-at-startup') ||
         yaml['enable_at_startup']?.toString().toLowerCase() == 'true';
+
+    // A more advanced version of 'enable_at_startup'
+    startupTask = yaml['startup_task'] != null
+        ? StartupTask.fromMap(yaml['startup_task'], appName!)
+        : null;
 
     // toast activator configurations
     dynamic toastActivatorYaml = yaml['toast_activator'] ?? YamlMap();
@@ -239,7 +248,9 @@ class Configuration {
       throw '"publisher display name" is too long, it should be less than 256 characters';
     }
 
-    if (!certificatePath.isNull || signToolOptions != null || store) {
+    if (!certificatePath.isNull ||
+        (SignTool.isCustomSignCommand(signToolOptions)) ||
+        store) {
       if (!certificatePath.isNull) {
         if (!(await File(certificatePath!).exists())) {
           throw 'The file certificate not found in: $certificatePath, check "msix_config: certificate_path" at pubspec.yaml';
@@ -294,6 +305,7 @@ class Configuration {
       ..addOption('identity-name', abbr: 'i')
       ..addOption('publisher', abbr: 'b')
       ..addOption('logo-path', abbr: 'l')
+      ..addOption('os-min-version')
       ..addOption('output-path', abbr: 'o')
       ..addOption('output-name', abbr: 'n')
       ..addOption('signtool-options')
@@ -331,7 +343,10 @@ class Configuration {
     _logger.trace('validating app installer config values');
 
     if (publishFolderPath.isNullOrEmpty ||
-        !await Directory(publishFolderPath!).exists()) {
+        (!await Directory(publishFolderPath!).exists() &&
+            !await Directory(publishFolderPath =
+                    '${Directory.current.path}\\${publishFolderPath!}')
+                .exists())) {
       _logger.stderr(
           'publish folder path is not exists, check "app_installer: publish_folder_path" at pubspec.yaml'
               .red);
@@ -410,4 +425,31 @@ class Configuration {
               .replaceAll(':', ''))
           .where((protocol) => protocol.isNotEmpty) ??
       [];
+}
+
+/// A more advanced version of 'enable_at_startup'.
+class StartupTask {
+  /// Identifier to enable / disable programmatically
+  final String taskId;
+
+  /// If true, then autostart is enabled by default
+  final bool enabled;
+
+  /// Parameters separated by space.
+  /// This is useful to detect if the app was started automatically.
+  final String? parameters;
+
+  StartupTask({
+    required this.taskId,
+    required this.enabled,
+    required this.parameters,
+  });
+
+  factory StartupTask.fromMap(Map map, String appName) {
+    return StartupTask(
+      taskId: map['task_id'] ?? appName.replaceAll('_', ''),
+      enabled: map['enabled'] ?? true,
+      parameters: map['parameters'],
+    );
+  }
 }

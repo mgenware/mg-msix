@@ -1,5 +1,41 @@
 # Changelog
 
+## 3.13.0
+
+- fix [#139](https://github.com/YehudaKremer/msix/issues/139): remove Flutter SDK constraints
+
+## 3.12.3
+
+- fix [#196](https://github.com/YehudaKremer/msix/issues/196)
+
+## 3.12.2
+
+- brings back Isolates for faster icons generation (after remove them in `3.12.0`)
+
+## 3.12.1
+
+- fix [#175](https://github.com/YehudaKremer/msix/issues/175): `app_installer -> publish_folder_path` config field is now support absolute-path
+
+## 3.12.0
+
+- fix [#193](https://github.com/YehudaKremer/msix/issues/193): remove `isolate` to support Flutter version >=3.10.0 (Dart 3v)
+
+## 3.11.1
+
+- fix [#159](https://github.com/YehudaKremer/msix/issues/159)
+
+## 3.11.0
+
+- add `os_min_version` configuration
+
+## 3.10.1
+
+- add [startup task](https://github.com/YehudaKremer/msix/blob/main/doc/startup_task_configuration.md) configuration
+
+## 3.9.2
+
+- update `cli_util` dependency to `0.4.0`
+
 ## 3.9.1
 
 - remove padding from generated icons (fix [#179](https://github.com/YehudaKremer/msix/issues/179))

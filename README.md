@@ -31,7 +31,7 @@ PS c:\src\flutter_project> flutter pub add --dev msix
 To create a MSIX installer, run the following command:
 
 ```console
-PS c:\src\flutter_project> flutter pub run msix:create
+PS c:\src\flutter_project> dart run msix:create
 ```
 
 ## ⚙️ Configuring your installer
@@ -76,7 +76,9 @@ See [Configurations Examples And Use Cases].
 | `execution_alias`                   | `--execution-alias`             | [Execution alias] command (cmd) that will activate the app.                                       | `myapp`                                     |
 | `enable_at_startup`                 | `--enable-at-startup`           | App start at startup or user log-in.                                                              | `true`                                      |
 | `store`                             | `--store`                       | Generate a MSIX file for publishing to the Microsoft Store.                                       | `false`                                     |
+| `os_min_version`                    | `--os-min-version`              | Set minimum OS version, default is `10.0.17763.0`                                                 | `10.0.17763.0`                              |
 | [Toast Notifications configuration] |                                 |                                                                                                   |                                             |
+| [Startup Task configuration]        |                                 | pass the app values (args) on startup or user log-in                                              |                                             |
 
 </details>
 
@@ -226,4 +228,5 @@ Tags: `msi` `windows` `win10` `win11` `windows10` `windows11` `windows store` `w
 [configurations examples and use cases]: https://pub.dev/packages/msix/example
 [see how the msix version is determined]: https://github.com/YehudaKremer/msix/blob/main/doc/msix_version.md
 [toast notifications configuration]: https://github.com/YehudaKremer/msix/blob/main/doc/toast_notifications_configuration.md
+[startup task configuration]: https://github.com/YehudaKremer/msix/blob/main/doc/startup_task_configuration.md
 [apps for websites]: https://docs.microsoft.com/en-us/windows/uwp/launch-resume/web-to-app-linking
