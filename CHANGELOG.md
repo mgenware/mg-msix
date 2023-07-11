@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.15.0
+
+- add support for `arm64` build folder layout [#205](https://github.com/YehudaKremer/msix/issues/205)
+
+### Breaking Changes
+
+- `architecture` config field is now accepts `x64` or `arm64` (instead of `x86`)
+
+## 3.14.2
+
+- fix [#203](https://github.com/YehudaKremer/msix/issues/203)
+
+## 3.14.0
+
+- fix [#201](https://github.com/YehudaKremer/msix/issues/201): use correct flutter executable (support [fvm](https://fvm.app/))
+
+## 3.13.3
+
+- fix [#181](https://github.com/YehudaKremer/msix/issues/181)
+
+## 3.13.2
+
+- get certificate publisher if using test certificate (fix [#159](https://github.com/YehudaKremer/msix/issues/159))
+
+## 3.13.1
+
+- fix [#197](https://github.com/YehudaKremer/msix/issues/197): locate msix assets path from script file directory
+
 ## 3.13.0
 
 - fix [#139](https://github.com/YehudaKremer/msix/issues/139): remove Flutter SDK constraints
