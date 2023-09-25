@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.16.3
+
+- temporary fix for [#235](https://github.com/YehudaKremer/msix/issues/235)
+
+## 3.16.2
+
+- fix [#232](https://github.com/YehudaKremer/msix/issues/232)
+
+## 3.16.1
+
+- fix [#178](https://github.com/YehudaKremer/msix/issues/178)
+- update `MaxVersionTested` value
+
+## 3.16.0
+
+- add Context menu extension ([#208](https://github.com/YehudaKremer/msix/issues/208))
+
 ## 3.15.1
 
 - fix [#211](https://github.com/YehudaKremer/msix/issues/211)
