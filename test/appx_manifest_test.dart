@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:msix/src/context_menu_configuration.dart';
+import 'package:mg_msix/src/context_menu_configuration.dart';
 import 'package:path/path.dart' as p;
 import 'package:cli_util/cli_logging.dart';
 import 'package:get_it/get_it.dart';

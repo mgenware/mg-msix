@@ -1,4 +1,4 @@
-import 'package:msix/src/method_extensions.dart';
+import 'package:mg_msix/src/method_extensions.dart';
 import 'package:yaml/yaml.dart';
 
 class ContextMenuConfiguration {
