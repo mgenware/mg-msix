@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.16.6
+
+- update MaxVersionTested
+
 ## 3.16.4
 
 - permanent fix for [#235](https://github.com/YehudaKremer/msix/issues/235)
