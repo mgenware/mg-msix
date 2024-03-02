@@ -4,10 +4,11 @@ Fork of [msix](https://github.com/YehudaKremer/msix) with support for localized 
 
 ## Usage
 
-Add this repo to `pubspec.yaml`:
+Replace the original msix package with this fork in `pubspec.yaml`:
 
 ```yaml
 dev_dependencies:
+  # msix: <version> # Remove this line.
   mg_msix:
     git:
       url: https://github.com/mgenware/mg-msix
@@ -38,6 +39,8 @@ msix_config:
 
   # Other fields should be the same as the original msix package.
 ```
+
+**Use `dart run mg_msix:create --store` (`mg_msix` instead of `msix`) to build.**
 
 ## Production ready?
 
