@@ -370,12 +370,7 @@ class Configuration {
       throw 'Build files not found at $buildFilesFolder, first run "flutter build windows" then try again';
     }
 
-    executableFileName = await Directory(buildFilesFolder)
-        .list()
-        .firstWhere((file) =>
-            file.path.endsWith('.exe') &&
-            !file.path.contains('PSFLauncher64.exe'))
-        .then((file) => basename(file.path));
+    executableFileName ??= '$appName.exe';
   }
 
   /// Declare and parse the cli arguments
