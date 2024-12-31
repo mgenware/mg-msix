@@ -124,6 +124,9 @@ class Configuration {
     osMinVersion =
         _args['os-min-version'] ?? yaml['os_min_version'] ?? osMinVersion;
 
+    executableFileName =
+        _args['executable-file-name'] ?? yaml['executable_file_name'];
+
     final String? signToolOptionsConfig =
         (_args['signtool-options'] ?? yaml['signtool_options'])?.toString();
     if (signToolOptionsConfig != null && signToolOptionsConfig.isNotEmpty) {
